@@ -7,17 +7,17 @@
 import os;
 
 def runCommand(command):
-    print command;
+    print(command);
     r = os.popen(command);
     info = r.readlines();
     for line in info:
-        print line;
+        print(line);
 
 def updategpio6():
     filename = '/boot/config.txt';
     key = 'gpio';
     value = '6=op,pn,dl'
-    fr = open(filename,'rb');
+    fr = open(filename,'r');
     try:
         lines = fr.readlines();
         update = 0;
@@ -36,7 +36,7 @@ def updategpio6():
         if not update == 1:
             if update == 0:
                 newValue += '\r\n' + key+'='+ value;
-            fw = open(filename,'wb');
+            fw = open(filename,'w');
             try:
                 fw.write(newValue);
             finally:
@@ -48,7 +48,7 @@ def updategpio13():
     filename = '/boot/config.txt';
     key = 'gpio';
     value = '13=ip'
-    fr = open(filename,'rb');
+    fr = open(filename,'r');
     try:
         lines = fr.readlines();
         update = 0;
@@ -67,7 +67,7 @@ def updategpio13():
         if not update == 1:
             if update == 0:
                 newValue += '\r\n' + key+'='+ value;
-            fw = open(filename,'wb');
+            fw = open(filename,'w');
             try:
                 fw.write(newValue);
             finally:
@@ -80,7 +80,7 @@ def updateConfig():
     filename = '/boot/config.txt';
     key = 'dtoverlay';
     value = 'i2c-rtc,pcf8563'
-    fr = open(filename,'rb');
+    fr = open(filename,'r');
     try:
         lines = fr.readlines();
         update = 0;
@@ -99,7 +99,7 @@ def updateConfig():
         if not update == 1:
             if update == 0:
                 newValue += '\r\n' + key+'='+ value;
-            fw = open(filename,'wb');
+            fw = open(filename,'w');
             try:
                 fw.write(newValue);
             finally:
@@ -120,7 +120,7 @@ def removeFakeHwclock():
 
 def updateHwclockSet() :
     filename = '/lib/udev/hwclock-set';
-    fr = open(filename,'rb');
+    fr = open(filename,'r');
     key = '-e /run/systemd/system';
     update = False;
     doUpdate = False;
@@ -137,7 +137,7 @@ def updateHwclockSet() :
                 update = False;
             newValue += line;
         if doUpdate :
-            fw = open(filename,'wb');
+            fw = open(filename,'w');
             try:
                 fw.write(newValue);
             finally:
